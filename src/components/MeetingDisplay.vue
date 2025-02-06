@@ -47,9 +47,13 @@ export default defineComponent({
   setup(props, context) {
     const time = computed((): string => {
       const date = new Date(props.meetingSlot.date);
-      const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-      const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-      return `${hours}:${minutes}`;
+
+
+      let hours = date.getHours();
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12 || 12;
+      return `${hours}:${minutes} ${ampm}`;
     });
 
     const isMeetingSelected = computed(():boolean => {
